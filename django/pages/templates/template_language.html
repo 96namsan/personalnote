@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h3>1.반복문</h3>
+  {% for menu  in menus  %}
+  <p>{{menu}}</p>
+  {% endfor %}
+  <hr>
+  {% comment %} forloop: for문이 반복되는 횟수를 출력 {% endcomment %}
+  {% for menu in menus %}
+  <p>{{forloop.counter}} : {{menu}}</p>
+  {% endfor %}
+  {% for user in empty_list  %}
+  <p>{{user}}</p>
+  {% empty %}
+  {% comment %} for 태그 안에 optional,빈 리스트라면 출력함 {% endcomment %}
+  <p>현재 가입한 유저가 없습니다.</p>
+  {% endfor %}
+  <hr>
+  <h3>2.조건문</h3>
+  {% if '바스버거' in menus %}
+  <p>저녁은 역시 바스버거지 ㅋ</p>
+  {% endif %}
+  {% if '롯데리아' in menus %}
+  <p>저녁은 역시 롯데리아지 ㅋ</p>
+  {% endif %}
+  <hr>
+  {% for menu in menus  %}
+    {% if forloop.first %}
+      <p>첫번째 메뉴는 비밀입니다.</p>
+    {% else %}
+      <p>{{menu}}</p>
+    {% endif %}
+    
+  {% endfor %}
+  <hr>
+  {% for menu in menus %}
+  {% comment %} forloop.counter는 기본적으로 1부터 시작
+  그러나 0부터 시작하고 싶다면 counter뒤에 0 붙여주면 됨
+  (다른 숫자는 안됨)
+  {% endcomment %}
+  <p>{{forloop.counter0}}번째 도는중</p>
+    {% if forloop.first %}
+      <p>첫번째 : {{menu}}</p>
+    {% else %}
+      <p>{{menu}}</p>
+
+    {% endif %}
+  {% endfor %}
+  <hr>
+  <h3>3. lorem ipsum</h3>
+  {% comment %} w는 단어, P는 단락, random은 무작위 {% endcomment %}
+  <p>{% lorem 3 w %}</p>
+  <p>{% lorem 4 w random %}</p>
+  <p>{% lorem 2 p %}</p>
+  <hr>
+  <h3>4.날짜표현</h3>
+  <p>{{datetimenow}}</p>
+  <p>{%now "DATETIME_FORMAT"%}</p>
+  <p>{% now "SHORT_DATETIME_FORMAT"%}</p>
+  <p>{% now "DATE_FORMAT"%}</p> {% comment %} 날짜만 나옴 {% endcomment %}
+  <p>{% now "SHORT_DATE_FORMAT"%}</p>
+  <p>{% now "Y년 n월 d일 (D) h:i"%}</p>
+  <p>{% now "Y" as current_year %}</p>
+  <p>Copyright {{current_year}}</p>
+  <h3>5. template Filter</h3>
+  {% for message in messages %}
+    {% if message|length > 5  %}
+      <p>{{message}}진짜 너무길어</p>
+    {% else %}
+      <p>{{message}}는 {{message|length}}글자</p>
+    {% endif %}
+  {% endfor %}
+  <h3>6.문자열 템플릿 필터</h3>
+  {% comment %} 문자열이 조건보다 길다면 ...으로 생략 {% endcomment %}
+  <p>{{my_sentence|truncatewords:3}}</p>
+  <p>{{my_sentence|truncatechars:3}}</p> 
+  <p>{{my_sentence|truncatechars:10}}</p>
+
+  <h3>7.글자 관련 필터</h3>
+  <p>{{'abc'|length}}</p>
+  <p>{{'ABC'|lower}}</p>
+  <p>{{my_sentence|title}}</p>
+  <p>{{menus|random}}</p>
+
+
+</body>
+</html>
